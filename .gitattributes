@@ -1,0 +1,2 @@
+# Ensure regression tests don't fail because of line endings
+codegen/src/test/resources/regression/** binary

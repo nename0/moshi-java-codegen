@@ -1,0 +1,28 @@
+subprojects {
+    apply plugin: "java"
+
+    group 'io.github.nename0'
+    version '1.0.0-SNAPSHOT'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        moshiVersion = "1.9.2"
+    }
+
+    dependencies {
+        testCompile "org.junit.jupiter:junit-jupiter:5.6.1"
+    }
+
+    test {
+        useJUnitPlatform() // enable junit 5
+    }
+}
+
+wrapper {
+    gradleVersion = '5.6.4' //version required
+}

@@ -1,0 +1,50 @@
+import org.gradle.internal.jvm.Jvm
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+ext {
+    autoServiceVersion = "1.0-rc6"
+    incapVersion = "0.2"
+}
+
+dependencies {
+    api "com.squareup.moshi:moshi:$moshiVersion"
+    implementation "com.squareup:javapoet:1.12.1"
+    implementation "com.google.auto.service:auto-service-annotations:$autoServiceVersion"
+    annotationProcessor "com.google.auto.service:auto-service:$autoServiceVersion"
+    implementation  "net.ltgt.gradle.incap:incap:$incapVersion"
+    annotationProcessor "net.ltgt.gradle.incap:incap-processor:$incapVersion"
+
+    testCompile "com.google.testing.compile:compile-testing:0.18"
+    testCompile files(Jvm.current().getToolsJar()) // we need the tools.jar from the jdk for google compile-testing
+    testAnnotationProcessor project // use self to process tests
+}
+
+def defaultResourceDir = sourceSets.test.resources.srcDirs[0]
+
+sourceSets {
+    test {
+        resources {
+            // add java source of test-adapters tests to out test resources so we can do regression testing with them
+            srcDirs defaultResourceDir, project(':test-adapters').sourceSets.test.java.srcDirs
+        }
+    }
+}
+
+// run this task to update the regression test expected JsonAdapters
+task updateRegressionTestExpectedOutput(type: Copy, dependsOn: project(':test-adapters').compileTestJava) {
+    from(project(':test-adapters').sourceSets.test.output.generatedSourcesDirs)
+    into(file(defaultResourceDir.path + '/regression'))
+}
+
+
+publishing {
+    publications {
+        mainPublication(MavenPublication) {
+            from components.java
+        }
+    }
+}

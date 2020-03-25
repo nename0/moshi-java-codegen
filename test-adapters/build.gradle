@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    testCompile "com.squareup.moshi:moshi:$moshiVersion"
+    testCompile "com.google.truth:truth:0.44"
+    testCompile "org.reflections:reflections:0.9.12"
+
+    testAnnotationProcessor project(':codegen')
+}

@@ -1,0 +1,1 @@
+just a file to be passed to getClassLoader().getResource("find-me.txt") to find the actual resource directory (./build/resources/test)
