@@ -33,11 +33,12 @@ dependencies {
 
 License
 --------
-The source code is based on
+The source code is based on:
 
 - The [logansquare-compiler](https://github.com/bluelinelabs/LoganSquare/tree/6c5ec5281fb58d85a99413b7b6f55e9ef18a6e06/processor)
 - The [moshi-kotlin-codegen](https://github.com/square/moshi/tree/b413423d0575849db7bdc6fcfbdb7d99f7e3a2c3/kotlin/codegen)
 
+<br></br>
 
     Copyright 2015 BlueLine Labs, Inc.
     Copyright (C) 2018 Square, Inc.
