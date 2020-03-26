@@ -1,0 +1,5 @@
+before_install: |
+  wget https://download.java.net/java/GA/jdk14/076bab302c7b4508975440c56f6cc26a/36/GPL/openjdk-14_linux-x64_bin.tar.gz
+  tar -xzf openjdk-14_linux-x64_bin.tar.gz
+  export JAVA_HOME=$(realpath ./jdk-14/)
+  export PATH=$PATH:$(realpath ./jdk-14/bin/)
