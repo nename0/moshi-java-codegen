@@ -2,10 +2,14 @@ plugins {
     id 'java'
 }
 
+// we need the JsonAdapters to be able to run on older android but we cannot go down to java 7 because of junit 5 and streams
+sourceCompatibility = 8
+targetCompatibility = 8
+
 dependencies {
-    testCompile "com.squareup.moshi:moshi:$moshiVersion"
-    testCompile "com.google.truth:truth:0.44"
-    testCompile "org.reflections:reflections:0.9.12"
+    testImplementation "com.squareup.moshi:moshi:$moshiVersion"
+    testImplementation "com.google.truth:truth:0.44"
+    testImplementation "org.reflections:reflections:0.9.12"
 
     testAnnotationProcessor project(':codegen')
 }

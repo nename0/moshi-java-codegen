@@ -1,6 +1,8 @@
 moshi-java-codegen
 =====
 
+[![](https://jitpack.io/v/nename0/moshi-java-codegen.svg)](https://jitpack.io/#nename0/moshi-java-codegen/1.1.0)
+
 This annotation processor generates small and fast [JsonAdapters](https://square.github.io/moshi/1.x/moshi/com/squareup/moshi/JsonAdapter.html)
 for Moshi from Java classes, just like the [moshi-kotlin-codegen](https://github.com/square/moshi#codegen) for Kotlin.
 To use it just annotate your class like this:
@@ -18,16 +20,13 @@ and add the annotation processor to your project. For Gradle:
 
 ```groovy   
 repositories {
-    maven {
-        name = "GitHubPackages - moshi-java-codegen"
-        url = uri("https://maven.pkg.github.com/nename0/moshi-java-codegen")
-    }
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     ...
 }
 
 dependencies {
-    annotationProcessor "io.github.nename0:moshi-java-codegen:1.0.0-SNAPSHOT" 
+    annotationProcessor "com.github.nename0:moshi-java-codegen:1.1.0" 
 }
 ``` 
 

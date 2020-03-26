@@ -1,4 +1,4 @@
-import org.gradle.internal.jvm.Jvm
+// import org.gradle.internal.jvm.Jvm
 
 plugins {
     id 'java-library'
@@ -8,19 +8,46 @@ plugins {
 ext {
     autoServiceVersion = "1.0-rc6"
     incapVersion = "0.2"
+    jabelVersion = "records-SNAPSHOT"
 }
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+sourceCompatibility = 14
+targetCompatibility = 8
 
 dependencies {
     api "com.squareup.moshi:moshi:$moshiVersion"
     implementation "com.squareup:javapoet:1.12.1"
+
     implementation "com.google.auto.service:auto-service-annotations:$autoServiceVersion"
     annotationProcessor "com.google.auto.service:auto-service:$autoServiceVersion"
+
     implementation  "net.ltgt.gradle.incap:incap:$incapVersion"
     annotationProcessor "net.ltgt.gradle.incap:incap-processor:$incapVersion"
 
-    testCompile "com.google.testing.compile:compile-testing:0.18"
-    testCompile files(Jvm.current().getToolsJar()) // we need the tools.jar from the jdk for google compile-testing
+    // use java 14 but compile to java 8
+    annotationProcessor "com.github.bsideup:jabel:$jabelVersion"
+    compileOnly "com.github.bsideup:jabel:$jabelVersion"
+
+    testImplementation "com.google.testing.compile:compile-testing:0.18"
+    // testCompile files(Jvm.current().getToolsJar()) // we need the tools.jar from the jdk for google compile-testing
     testAnnotationProcessor project // use self to process tests
+}
+
+tasks.withType(JavaCompile).all {
+    options.compilerArgs = [
+            "--release", "8", // Avoid using Java 9+ APIs
+            '--enable-preview',
+    ]
+
+    doFirst {
+        options.compilerArgs = options.compilerArgs.findAll {
+            it != '--enable-preview'
+        }
+    }
 }
 
 def defaultResourceDir = sourceSets.test.resources.srcDirs[0]
@@ -29,7 +56,7 @@ sourceSets {
     test {
         resources {
             // add java source of test-adapters tests to out test resources so we can do regression testing with them
-            srcDirs defaultResourceDir, project(':test-adapters').sourceSets.test.java.srcDirs
+            srcDirs project(':test-adapters').sourceSets.test.java.srcDirs
         }
     }
 }
@@ -38,6 +65,11 @@ sourceSets {
 task updateRegressionTestExpectedOutput(type: Copy, dependsOn: project(':test-adapters').compileTestJava) {
     from(project(':test-adapters').sourceSets.test.output.generatedSourcesDirs)
     into(file(defaultResourceDir.path + '/regression'))
+
+    doLast {
+        println "From: " + project(':test-adapters').sourceSets.test.output.generatedSourcesDirs.join(", ")
+        println "To: " + file(defaultResourceDir.path + '/regression')
+    }
 }
 
 
