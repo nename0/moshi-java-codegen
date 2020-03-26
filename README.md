@@ -1,7 +1,7 @@
 moshi-java-codegen
 =====
 
-[![](https://jitpack.io/v/nename0/moshi-java-codegen.svg)](https://jitpack.io/#nename0/moshi-java-codegen/1.1.0)
+[![](https://jitpack.io/v/nename0/moshi-java-codegen.svg)](https://jitpack.io/#nename0/moshi-java-codegen/1.1.1)
 
 This annotation processor generates small and fast [JsonAdapters](https://square.github.io/moshi/1.x/moshi/com/squareup/moshi/JsonAdapter.html)
 for Moshi from Java classes, just like the [moshi-kotlin-codegen](https://github.com/square/moshi#codegen) for Kotlin.
@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor "com.github.nename0:moshi-java-codegen:1.1.0" 
+    annotationProcessor "com.github.nename0:moshi-java-codegen:1.1.1" 
 }
 ``` 
 
